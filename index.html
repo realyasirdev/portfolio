@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yasir Ali Khan — Web Developer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --sidebar-w: 240px;
+      --blue: #00aaff;
+      --dark: #1a1a1a;
+      --darker: #111111;
+      --darkest: #0a0a0a;
+      --text: #ccc;
+      --text-muted: #888;
+    }
+    html, body { height: 100%; font-family: 'Open Sans', sans-serif; background: var(--darkest); color: white; overflow-x: hidden; }
+
+    .wrapper { display: flex; min-height: 100vh; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-w); min-width: var(--sidebar-w);
+      background: var(--dark);
+      display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; bottom: 0;
+      z-index: 100; overflow-y: auto;
+    }
+    .sidebar-avatar-wrap {
+      width: 100%; aspect-ratio: 1;
+      background: #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .sidebar-avatar-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .sidebar-avatar-wrap img {
+  width: 200px;   /* adjust to your liking */
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.2s;
+}
+
+.sidebar-avatar-wrap img:hover { transform: scale(1.05); }
+    .sidebar-role {
+      background: var(--darker); text-align: center;
+      padding: 0.45rem 1rem; font-size: 0.68rem;
+      color: var(--text-muted); letter-spacing: 0.08em;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .sidebar-nav { flex: 1; padding: 0.5rem 0; }
+    .sidebar-nav a {
+      display: flex; align-items: center; gap: 0.9rem;
+      padding: 0.9rem 1.5rem; color: var(--text); text-decoration: none;
+      font-family: 'Open Sans', sans-serif; font-size: 0.8rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-nav a:hover, .sidebar-nav a.active {
+      background: rgba(0,170,255,0.08); color: white; border-left-color: var(--blue);
+    }
+    .sidebar-nav a i { font-size: 1.1rem; width: 20px; text-align: center; }
+    .sidebar-social {
+      padding: 1.25rem 1.5rem; display: flex; gap: 0.75rem;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .sidebar-social a { color: var(--text-muted); font-size: 1rem; transition: color 0.2s; text-decoration: none; }
+    .sidebar-social a:hover { color: var(--blue); }
+
+    /* ── MAIN ── */
+    .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #000000 0%, #0a0a0a 40%, #0d0d0d 70%, #050505 100%);
+    }
+    .hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 10% 50%, rgba(0,170,255,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 90% 20%, rgba(0,170,255,0.05) 0%, transparent 45%),
+        radial-gradient(ellipse at 50% 85%, rgba(0,100,200,0.06) 0%, transparent 50%);
+    }
+    .hero-content { position: relative; text-align: center; z-index: 2; padding: 1rem; }
+    .hero-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.04em; line-height: 1; margin-bottom: 1.5rem;
+      color: white; text-shadow: 0 2px 20px rgba(0,0,0,0.7);
+    }
+    .hero-title span { color: var(--blue); }
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-weight: 300; color: rgba(255,255,255,0.9); letter-spacing: 0.05em;
+    }
+    .hero-subtitle strong {
+      font-weight: 600; color: white;
+      border-bottom: 2px solid var(--blue); padding-bottom: 2px;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; margin-top: 2.5rem; flex-wrap: wrap; }
+    .btn-blue {
+      background: var(--blue); color: white; border: none;
+      padding: 0.8rem 2.2rem; font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; transition: background 0.2s, transform 0.2s; display: inline-block;
+    }
+    .btn-blue:hover { background: #008edb; color: white; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: white; border: 2px solid rgba(255,255,255,0.5);
+      padding: 0.8rem 2.2rem; font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; transition: border-color 0.2s, transform 0.2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: white; color: white; transform: translateY(-2px); }
+    .scroll-down {
+      position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      color: rgba(255,255,255,0.5); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(7px)} }
+
+    /* ── SECTIONS ── */
+    .section { padding: 6rem 4rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .section-tag { font-family: 'Oswald', sans-serif; font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+    .section-title { font-family: 'Oswald', sans-serif; font-size: 2.5rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 2.5rem; }
+    .section-title span { color: var(--blue); }
+
+    /* INFO ROWS */
+    .info-row { display: flex; gap: 0.5rem; margin-bottom: 0.65rem; font-size: 0.9rem; align-items: flex-start; }
+    .info-label { color: var(--text-muted); min-width: 90px; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; padding-top: 2px; }
+    .info-val { color: var(--text); }
+
+    /* STAT CARDS */
+    .stat-card { background: var(--darker); border: 1px solid rgba(255,255,255,0.07); padding: 1.5rem; text-align: center; transition: border-color 0.2s; }
+    .stat-card:hover { border-color: var(--blue); }
+    .stat-num { font-family: 'Oswald', sans-serif; font-size: 2.2rem; color: var(--blue); line-height: 1; }
+    .stat-label { font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.4rem; }
+
+    /* SKILL TAGS */
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .skill-tag {
+      background: rgba(0,170,255,0.08); border: 1px solid rgba(0,170,255,0.22);
+      color: var(--blue); font-size: 0.75rem; font-family: 'Oswald', sans-serif;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.9rem;
+      transition: background 0.2s;
+    }
+    .skill-tag:hover { background: rgba(0,170,255,0.18); }
+
+    /* SKILLS BARS */
+    .skill-item { margin-bottom: 1.5rem; }
+    .skill-top { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); }
+    .skill-bar { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+    .skill-fill { height: 100%; background: var(--blue); border-radius: 2px; width: 0; transition: width 1.5s ease; }
+
+    /* LANG CARDS */
+    .lang-card {
+      background: var(--darker); border: 1px solid rgba(255,255,255,0.07);
+      padding: 1.5rem; text-align: center; transition: border-color 0.2s;
+    }
+    .lang-card:hover { border-color: var(--blue); }
+    .lang-flag { font-size: 2rem; margin-bottom: 0.5rem; }
+    .lang-name { font-family: 'Oswald', sans-serif; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .lang-level { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; }
+
+    /* CONTACT */
+    .form-control-dark {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+      color: white; padding: 0.8rem 1rem; border-radius: 0;
+      font-size: 0.9rem; width: 100%; outline: none;
+      transition: border-color 0.2s; font-family: 'Open Sans', sans-serif;
+    }
+    .form-control-dark::placeholder { color: var(--text-muted); }
+    .form-control-dark:focus { border-color: var(--blue); background: rgba(255,255,255,0.06); }
+    textarea.form-control-dark { resize: vertical; min-height: 140px; }
+
+    /* FOOTER */
+    footer { background: var(--darkest); text-align: center; padding: 1.5rem; font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.06); letter-spacing: 0.08em; }
+    footer span { color: var(--blue); }
+
+    /* SETTINGS */
+    .settings-btn { position: fixed; top: 1rem; right: 1rem; z-index: 200; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); color: white; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; transition: background 0.2s; text-decoration: none; }
+    .settings-btn:hover { background: rgba(0,170,255,0.2); color: white; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .sidebar { width: 100%; position: relative; height: 100%; }
+      .main { margin-left: 0; }
+      .section { padding: 4rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-avatar-wrap">
+      <img src="profile.jpeg" alt="Yasir Ali Khan" />
+    </div>
+    <div class="sidebar-name">Yasir Ali Khan</div>
+    <div class="sidebar-role">Web Developer · Lahore, Pakistan</div>
+
+    <nav class="sidebar-nav">
+      <a href="#home" class="active"><i class="bi bi-house"></i> Home</a>
+      <a href="#about"><i class="bi bi-person"></i> About Me</a>
+      <a href="#skills"><i class="bi bi-code-slash"></i> Skills</a>
+      <a href="#languages"><i class="bi bi-translate"></i> Languages</a>
+      <a href="#contact"><i class="bi bi-envelope"></i> Contact</a>
+    </nav>
+
+    <div class="sidebar-social">
+      <a href="mailto:yasiralikhanrazakhail@gmail.com" title="Gmail"><i class="bi bi-envelope-fill"></i></a>
+      <a href="tel:+923444157654" title="Phone"><i class="bi bi-telephone-fill"></i></a>
+      <a href="#" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+      <a href="#" title="GitHub"><i class="bi bi-github"></i></a>
+      <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+    <a class="settings-btn" href="#contact"><i class="bi bi-gear"></i></a>
+
+    <!-- HOME -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">YASIR ALI <span>KHAN</span></h1>
+        <p class="hero-subtitle">I'm a <strong>Web Developer</strong></p>
+        <div class="hero-btns">
+          <a href="#about" class="btn-blue">About Me</a>
+          <a href="#contact" class="btn-outline">Hire Me</a>
+        </div>
+      </div>
+      <div class="scroll-down">
+        <i class="bi bi-chevron-double-down"></i>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section class="section" id="about">
+      <div class="section-tag">Who I Am</div>
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="row g-5">
+        <div class="col-md-6">
+          <p style="color:var(--text);line-height:1.9;font-size:0.95rem;font-weight:300">
+            Motivated, dedicated, and hardworking individual seeking an opportunity to begin a professional career in a dynamic and growth-oriented organization. I am eager to apply my technical knowledge gained through my F.Sc (ICS) and one-year DIT diploma, while continuously developing new skills and enhancing my capabilities.
+          </p>
+          <p style="color:var(--text);line-height:1.9;font-size:0.95rem;font-weight:300;margin-top:1rem">
+            With a strong willingness to learn, a positive attitude, and a commitment to delivering quality work, I aim to contribute effectively to the success of any organization and grow as a valuable team member.
+          </p>
+          <div style="margin-top:2rem">
+            <div class="info-row"><span class="info-label">Name</span><span class="info-val">Yasir Ali Khan</span></div>
+            <div class="info-row"><span class="info-label">Phone</span><span class="info-val">+92 344 415 7654</span></div>
+            <div class="info-row"><span class="info-label">Email</span><span class="info-val">yasiralikhanrazakhail@gmail.com</span></div>
+            <div class="info-row"><span class="info-label">Location</span><span class="info-val">Nishtar Colony, Lahore</span></div>
+            <div class="info-row"><span class="info-label">Status</span><span class="info-val" style="color:#4cff9f">Open to Opportunities ●</span></div>
+          </div>
+          <a href="mailto:yasiralikhanrazakhail@gmail.com" class="btn-blue" style="display:inline-block;margin-top:2rem">
+            <i class="bi bi-envelope"></i>&nbsp; Get In Touch
+          </a>
+        </div>
+        <div class="col-md-6">
+          <div class="row g-3">
+            <div class="col-6"><div class="stat-card"><div class="stat-num">2</div><div class="stat-label">Qualifications</div></div></div>
+            <div class="col-6"><div class="stat-card"><div class="stat-num">5</div><div class="stat-label">Core Skills</div></div></div>
+            <div class="col-6"><div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Languages</div></div></div>
+            <div class="col-6"><div class="stat-card"><div class="stat-num">∞</div><div class="stat-label">Willingness</div></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills" style="background:var(--darker)">
+      <div class="section-tag">What I Know</div>
+      <h2 class="section-title">My <span>Skills</span></h2>
+      <div class="row g-5">
+        <div class="col-md-6">
+          <div class="skill-item">
+            <div class="skill-top"><span>Computer Basics &amp; Office Apps</span><span>85%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-top"><span>Programming Fundamentals</span><span>70%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-top"><span>IT Troubleshooting</span><span>65%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-top"><span>Communication Skills</span><span>82%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-top"><span>Problem Solving</span><span>78%</span></div>
+            <div class="skill-bar"><div class="skill-fill" data-width="78"></div></div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <p style="color:var(--text-muted);font-size:0.85rem;line-height:1.8;margin-bottom:1.5rem">
+            A well-rounded set of technical and soft skills developed through formal education and self-driven learning at Government Post Graduate College of Management Sciences, Lahore.
+          </p>
+          <div class="skill-tags">
+            <span class="skill-tag">MS Word</span>
+            <span class="skill-tag">MS Excel</span>
+            <span class="skill-tag">MS PowerPoint</span>
+            <span class="skill-tag">Internet Browsing</span>
+            <span class="skill-tag">Basic Programming</span>
+            <span class="skill-tag">IT Support</span>
+            <span class="skill-tag">Data Entry</span>
+            <span class="skill-tag">Teamwork</span>
+            <span class="skill-tag">Time Management</span>
+            <span class="skill-tag">Critical Thinking</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section class="section" id="languages">
+      <div class="section-tag">Communication</div>
+      <h2 class="section-title">My <span>Languages</span></h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="lang-card">
+            <div class="lang-flag">🇵🇰</div>
+            <div class="lang-name">Urdu</div>
+            <div class="lang-level">Native Speaker</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="lang-card">
+            <div class="lang-flag">🇬🇧</div>
+            <div class="lang-name">English</div>
+            <div class="lang-level">Proficient</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="lang-card">
+            <div class="lang-flag">🏔️</div>
+            <div class="lang-name">Khowar</div>
+            <div class="lang-level">Native Speaker</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact" style="background:var(--darker)">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Contact <span>Me</span></h2>
+      <div class="row g-5">
+        <div class="col-md-5">
+          <p style="color:var(--text);line-height:1.9;font-size:0.95rem;font-weight:300;margin-bottom:2rem">
+            I'm actively looking for opportunities to start and grow my professional career. Whether you have a job offer, internship, or just want to connect — feel free to reach out!
+          </p>
+          <div style="display:flex;flex-direction:column;gap:1.1rem">
+            <div style="display:flex;align-items:center;gap:1rem">
+              <i class="bi bi-geo-alt-fill" style="color:var(--blue);font-size:1.2rem;width:20px"></i>
+              <span style="font-size:0.9rem;color:var(--text)">Nishtar Colony, Lahore, Pakistan</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:1rem">
+              <i class="bi bi-telephone-fill" style="color:var(--blue);font-size:1.2rem;width:20px"></i>
+              <a href="tel:+923444157654" style="color:var(--text);text-decoration:none;font-size:0.9rem">+92 344 415 7654</a>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:1rem">
+              <i class="bi bi-envelope-fill" style="color:var(--blue);font-size:1.2rem;width:20px;margin-top:2px"></i>
+              <a href="mailto:yasiralikhanrazakhail@gmail.com" style="color:var(--text);text-decoration:none;font-size:0.9rem;word-break:break-all">yasiralikhanrazakhail@gmail.com</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+            <input class="form-control-dark" type="text" placeholder="Your Name"/>
+            <input class="form-control-dark" type="email" placeholder="Your Email"/>
+          </div>
+          <input class="form-control-dark" type="text" placeholder="Subject" style="margin-bottom:1rem;display:block"/>
+          <textarea class="form-control-dark" placeholder="Your Message"></textarea>
+          <button class="btn-blue" style="margin-top:1.25rem;cursor:pointer;border:none">
+            Send Message &nbsp;<i class="bi bi-send"></i>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2025 <span>Yasir Ali Khan</span> · Nishtar Colony, Lahore · Made with ❤️</p>
+    </footer>
+  </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ACTIVE NAV
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const lnk = document.querySelector(`.sidebar-nav a[href="#${e.target.id}"]`);
+        if (lnk) lnk.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => navObs.observe(s));
+
+  // SMOOTH SCROLL
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(link.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // SKILL BARS
+  const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.skill-fill').forEach(b => { b.style.width = b.dataset.width + '%'; });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('#skills').forEach(s => skillObs.observe(s));
+</script>
+</body>
+</html>
